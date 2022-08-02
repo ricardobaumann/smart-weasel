@@ -1,0 +1,88 @@
+databaseChangeLog:
+  - changeSet:
+      id: setup-db
+      author: ricardo.baumann
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: varchar(100)
+              - column:
+                  name: organization_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: iban
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: bic
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance
+                  type: decimal(13,2)
+                  constraints:
+                    nullable: false
+            tableName: accounts
+        - sql:
+            sql: alter table accounts add constraint account_balance_check CHECK (balance >=0)
+        - createTable:
+            tableName: transactions
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: varchar(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: varchar(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: iban
+                  type: varchar(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: bic
+                  type: varchar(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: amount
+                  type: decimal(13,2)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: currency
+                  type: varchar(100)
+              - column:
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_transaction_account
+                    references: accounts(id)
+                  name: account_id
+                  type: varchar(100)
+              - column:
+                  name: description
+                  type: text
+        - createIndex:
+            columns:
+              - column:
+                  name: account_id
+            indexName: idx_transaction_account
+            tableName: transactions

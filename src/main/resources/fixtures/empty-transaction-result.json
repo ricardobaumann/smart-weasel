@@ -1,0 +1,23 @@
+{
+  "type": "https://zalando.github.io/problem/constraint-violation",
+  "status": 400,
+  "violations": [
+    {
+      "field": "creditTransfers",
+      "message": "must not be null"
+    },
+    {
+      "field": "organizationBic",
+      "message": "must not be blank"
+    },
+    {
+      "field": "organizationIban",
+      "message": "must not be blank"
+    },
+    {
+      "field": "organizationName",
+      "message": "must not be blank"
+    }
+  ],
+  "title": "Constraint Violation"
+}
